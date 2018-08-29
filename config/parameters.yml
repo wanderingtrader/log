@@ -1,0 +1,4 @@
+parameters:
+    # Logger parameters
+    logger.basic.file: 'path/to/log/file.log'
+    logger.basic.level: !php/const Monolog\Logger::NOTICE

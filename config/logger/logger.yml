@@ -1,0 +1,31 @@
+services:
+      # General logger for services
+      logger:
+          class: Monolog\Logger
+          arguments:
+              $name: logger
+              $handlers:
+                  - '@logger.handler.basic'
+              $processors:
+                  - '@logger.proccessor.memory'
+                  - '@logger.proccessor.psr'
+                  - '@logger.proccessor.introspection'
+
+      # General logger.
+      logger.handler.basic:
+          class: Monolog\Handler\RotatingFileHandler
+          arguments:
+              $filename: '%logger.basic.file%'
+              $maxFiles: 0
+              $level: '%logger.basic.level%'
+
+      logger.proccessor.introspection:
+          class: Monolog\Processor\IntrospectionProcessor
+          arguments:
+              $level: !php/const Monolog\Logger::NOTICE
+
+      logger.proccessor.memory:
+          class: Monolog\Processor\MemoryUsageProcessor
+
+      logger.proccessor.psr:
+          class: Monolog\Processor\PsrLogMessageProcessor
